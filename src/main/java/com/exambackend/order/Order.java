@@ -1,7 +1,10 @@
 package com.exambackend.order;
 
+import com.exambackend.delivery.Delivery;
 import com.exambackend.product.Product;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "orders")
@@ -15,16 +18,23 @@ public class Order {
     private Integer quantity;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name= "product_id")
     private Product product;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name= "delivery_id")
+    private Delivery delivery;
 
     // Constructors
     public Order() {
     }
 
-    public Order(Integer quantity, Product product) {
+    public Order(Integer quantity, Product product, Delivery delivery) {
         this.quantity = quantity;
         this.product = product;
+        this.delivery = delivery;
     }
 
     // Getters
@@ -40,6 +50,10 @@ public class Order {
         return product;
     }
 
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
     // Setters
     public void setId(Long id) {
         this.id = id;
@@ -51,5 +65,9 @@ public class Order {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
     }
 }

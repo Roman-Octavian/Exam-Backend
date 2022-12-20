@@ -22,11 +22,6 @@ public class OrderController {
         return orderService.getOrders();
     }
 
-    @GetMapping(path = "{id}")
-    public Optional<Order> getOrderById(@PathVariable("id") Long id) {
-        return orderService.getOrderById(id);
-    }
-
     @PostMapping()
     public void addOrder(@RequestBody Order order) {
         orderService.addOrder(order);

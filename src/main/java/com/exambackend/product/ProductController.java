@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path= "api/v1/products")
+@RequestMapping(path = "api/v1/products")
 @CrossOrigin
 public class ProductController {
 
@@ -29,13 +29,15 @@ public class ProductController {
     }
 
     @PostMapping()
-    public void addProduct(@RequestBody Product product) {
+    public Optional<Product> addProduct(@RequestBody Product product) {
         productService.addProduct(product);
+        return productService.getProductByName(product.getName());
     }
 
     @PutMapping(path = "{id}")
-    public void updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+    public List<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         productService.updateProduct(id, product);
+        return productService.getProducts();
     }
 
     @DeleteMapping(path = "{id}")

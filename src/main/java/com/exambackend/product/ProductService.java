@@ -30,7 +30,9 @@ public class ProductService {
         if (productOptional.isPresent()) {
             throw new IllegalStateException("Product already exists.");
         }
-        productRepository.save(product);
+        if (product.getPrice() > 0 && product.getWeight() > 0) {
+            productRepository.save(product);
+        }
     }
 
     @Transactional
